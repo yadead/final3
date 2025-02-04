@@ -23,3 +23,49 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 });
+
+
+  function signIn() {
+    let username = document.getElementById("username").value;
+    let password = document.getElementById("password").value;
+    alert("Signing in as: " + username);
+    // You can also send this data to the server here
+  }
+
+  function signUp() {
+    let username = document.getElementById("username").value;
+    let password = document.getElementById("password").value;
+
+    fetch("/signup", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ username: username, password: password })
+    })
+    .then(response => response.json())
+    .then(data => alert(data.message)) // Show the server response
+    .catch(error => console.error("Error:", error)); // Log any errors
+  }
+
+  function submit() {
+    // Prevent form submission if inside a form
+    event.preventDefault(); 
+
+    let Project = document.getElementById("Project").value;
+    let Start_Time = document.getElementById("Start_Time").value;
+    let End_Time = document.getElementById("End_Time").value;
+    let Repo = document.getElementById("Repo").value;
+    let Developer_Notes = document.getElementById("Developer_Notes").value;
+
+    console.log({
+      Project: Project,
+      Start_Time: Start_Time,
+      End_Time: End_Time,
+      Repo: Repo,
+      Developer_Notes: Developer_Notes
+    });
+
+    // You can send the data to the server or handle it further here
+  }
+

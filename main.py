@@ -7,8 +7,9 @@ import requests
 from flask_wtf import CSRFProtect
 from flask_csp.csp import csp_header
 import logging
-
+from userManagement import signup
 import userManagement as dbHandler
+from flask_cors import CORS
 
 # Code snippet for logging a message
 # app.logger.critical("message")
@@ -25,7 +26,7 @@ logging.basicConfig(
 app = Flask(__name__)
 app.secret_key = b"_53oi3uriq9pifpff;apl"
 csrf = CSRFProtect(app)
-
+CORS(app)
 
 # Redirect index.html to domain root for consistent UX
 @app.route("/index", methods=["GET"])
@@ -66,16 +67,18 @@ def index():
 def privacy():
     return render_template("/privacy.html")
 
-
-# example CSRF protected form
-@app.route("/form.html", methods=["POST", "GET"])
+@app.route("/form.html", methods=["GET"])
 def form():
-    if request.method == "POST":
-        email = request.form["email"]
-        text = request.form["text"]
-        return render_template("/form.html")
-    else:
-        return render_template("/form.html")
+    return render_template("/form.html")
+
+@app.route("/signup", methods=["POST"])
+def signup_route():
+    data = request.get_json()
+    print("Received data:", data)
+    username = data["username"]
+    password = data["password"]
+    signup(username, password)
+    return jsonify({"message": f"User '{username}' signed up successfully!"}), 201
 
 
 # Endpoint for logging CSP violations

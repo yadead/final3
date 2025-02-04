@@ -1,27 +1,62 @@
-{% extends 'layout.html' %}
-{% block content %}
-<div class="container">
-  <div class="row">
-    <h1>Sample Secure Form</h1>
-  </div>
-</div>
-<div class="container">
-  <div class="row">
-    <form action="/form.html" method="POST" class="box">
-      <div class="col-auto">
-        <label name="exampleFormControlInput1" class="form-label">Email address</label>
-        <input name="email" type="email" class="form-control" id="exampleFormControlInput1" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2, 4}$" placeholder="name@example.com">
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Form Example</title>
+    <link rel="stylesheet" href="static/css/style.css" />
+    <script src="static/js/app.js">
+      function toggleForm() {
+        const form = document.getElementById('form-container');
+        // Toggle visibility of the form
+        form.style.display = form.style.display === 'none' ? 'block' : 'none';
+      }
+      
+      function submit(event) {
+        event.preventDefault();  // Prevents the form from submitting and refreshing the page
+        
+        // Get values from the form fields
+        const project = document.getElementById('Project').value;
+        const startTime = document.getElementById('Start_Time').value;
+        const endTime = document.getElementById('End_Time').value;
+        const repo = document.getElementById('Repo').value;
+        const developerNotes = document.getElementById('Developer_Notes').value;
+        
+        console.log({
+          Project: project,
+          Start_Time: startTime,
+          End_Time: endTime,
+          Repo: repo,
+          Developer_Notes: developerNotes
+        });
+        
+        // Optionally reset the form after submission (clear input fields)
+        document.getElementById('form-container').reset();
+      }
+    </script>
+  </head>
+  <body>
+    <div class="container">
+      <h2>Create Form</h2>
+          <input type="text" id="Project" name="project" placeholder="Enter Project Name" required />
+          <input type="text" id="Start_Time" name="start_time" placeholder="Enter Start Time" required />
+          <input type="text" id="End_Time" name="end_time" placeholder="Enter End Time" required />
+          <input type="text" id="Repo" name="repo" placeholder="Enter Repository Link" required />
+          <input type="text" id="Developer_Notes" name="developer_notes" placeholder="Enter Developer Notes" required />
+          
+          <!-- CSRF Token for Flask -->
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+
+          <button class="submit" type="submit">Submit</button>
       </div>
-      <div class="col-auto">
-        <label for="exampleFormControlTextarea1" class="form-label">Example text area</label>
-        <textarea class="form-control" name="text" id="exampleFormControlTextarea1" rows="3"></textarea>
-      </div>
-      <br/>
-      <div class="col-auto">
-        <button type="submit" class="btn btn-primary mb-3">Submit</button>
-      </div>
-      <input type="hidden" name="csrf_token" value = "{{ csrf_token() }}" />
-    </form>
-  </div>
-</div>
+    </div>
+  </body>
+</html>
+
+{% block extra_styles %}
+<link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+{% endblock %}
+
+{% block extra_scripts %}
+<script src="{{ url_for('static', filename='app.js') }}"></script>
 {% endblock %}
