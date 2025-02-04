@@ -3,3 +3,4 @@ bcrypt
 flask_wtf
 flask-csp
 flask-cors
+flask_sqlalchemy

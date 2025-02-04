@@ -1,24 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta
-      http-equiv="Content-Security-Policy"
-      content="base-uri 'self'; default-src 'self'; style-src 'self'; script-src 'self'; img-src 'self' data:; media-src 'self'; font-src 'self'; connect-src 'self'; object-src 'self'; worker-src 'self'; frame-src 'none'; form-action 'self'; manifest-src 'self'"
-    />
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" type="text/css" href="static/css/style.css" />
-    <title>Bootstrap demo</title>
-    <link rel="manifest" href="static/manifest.json" />
-    <link rel="icon" type="image/x-icon" href="static/images/favicon.png" />
-    <meta name="theme-color" content="" />
-    <link href="static/css/bootstrap.min.css" rel="stylesheet" />
-  </head>
-  <body>
-    {% include "partials/menu.html" %} {% block content %}{% endblock %} {%
-    include "partials/footer.html" %}
-    <script src="static/js/bootstrap.bundle.min.js"></script>
-    <script src="static/js/serviceWorker.js"></script>
-    <script src="static/js/app.js"></script>
-  </body>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}My Website{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    
+    <!-- Add CSRF token to the meta tag for AJAX usage (optional) -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    
+    {% block extra_styles %}{% endblock %}
+</head>
+<body>
+    <!-- Navbar (common across all pages) -->
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Navbar</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a href="{{ url_for('index') }}" class="nav-link active" aria-current="page">Sign In/Sign Up</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ url_for('form') }}" class="nav-link">Form</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content (this will be replaced by page-specific content) -->
+    <div class="container">
+        {% block content %}{% endblock %}
+    </div>
+
+    <!-- Footer (common across all pages) -->
+    <footer>
+        <p>&copy; 2025 My Website. All Rights Reserved.</p>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+    {% block extra_scripts %}{% endblock %}
+</body>
 </html>

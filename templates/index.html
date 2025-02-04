@@ -1,5 +1,7 @@
 {% extends 'layout.html' %}
 
+{% block title %}Sign In / Sign Up{% endblock %}
+
 {% block content %}
 <div class="container">
     <h2>Sign In / Sign Up</h2>
@@ -7,14 +9,13 @@
     <input type="password" id="password" placeholder="Enter Password">
     <button class="signin" onclick="signIn()">Sign In</button>
     <button class="signup" onclick="signUp()">Sign Up</button>
-    <a href="form.html">form</a>
 </div>
 {% endblock %}
 
-{% block extra_styles %}
-<link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-{% endblock %}
-
 {% block extra_scripts %}
-<script src="{{ url_for('static', filename='app.js') }}"></script>
+<script>
+    function showForm() {
+        window.location.href = "{{ url_for('form') }}";  // Redirect to form page
+    }
+</script>
 {% endblock %}

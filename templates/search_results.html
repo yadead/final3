@@ -1,0 +1,23 @@
+{% extends 'layout.html' %}
+
+{% block title %}Search Results{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h3>Search Results</h3>
+    {% if entries %}
+        <ul>
+            {% for entry in entries %}
+                <li>
+                    <strong>Developer Name:</strong> {{ entry.developer_name }}<br>
+                    <strong>Project Name:</strong> {{ entry.project_name }}<br>
+                    <strong>Diary Entry Time:</strong> {{ entry.diary_entry_time }}<br>
+                    <strong>Total Time Worked:</strong> {{ entry.total_time_worked }}<br>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No results found for your search.</p>
+    {% endif %}
+</div>
+{% endblock %}
