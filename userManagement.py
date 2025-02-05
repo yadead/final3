@@ -5,6 +5,7 @@ database_name = "databaseFiles\database.db"
 table_nameu = "user_table"
 table_name = "diary_table"
 print("Database path:", os.path.abspath(database_name))
+print("http://127.0.0.1:5000/ or http://localhost:5000/")
 
 #connect sqlite3 to the database
 connection = sqlite3.connect(database_name)

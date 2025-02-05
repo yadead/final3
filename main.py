@@ -4,14 +4,17 @@ from flask_wtf import CSRFProtect, FlaskForm
 from flask_csp.csp import csp_header
 from flask_cors import CORS
 import logging
-from userManagement import signup
+from userManagement import signup, signin, diary_entry, sdevname, sprojname
 from wtforms import StringField, SubmitField
 from flask_wtf.csrf import CSRFError
+import os
 
 # Setup app and logging
 app = Flask(__name__)
 app.secret_key = b"_53oi3uriq9pifpff;apl"
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///C:/Users/User/OneDrive/Documents/robotclaw/final3/databaseFiles/database.db'
+BASE_DIR = os.path.abspath(os.path.dirname(__file__))
+db_path = os.path.join(BASE_DIR, "databaseFiles", "database.db")
+app.config['SQLALCHEMY_DATABASE_URI'] = f"sqlite:///{db_path}"
 
 # Initialize SQLAlchemy and CSRFProtect
 db = SQLAlchemy()
